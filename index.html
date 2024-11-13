@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+
+        </div>
+        <nav>
+            <div class="logo">TravelA</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Layanan</a></li>
+                <li><a href="#destinations">Destinasi</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="tiket.htm">Pesan</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>Jelajahi Alam Dunia Bersama kami</h1>
+            <p>Nikmati Pengalaman wisata Terbaik Anda bersama Kami dengan harga terjangkau</p>
+            <a class="cta-btn" href="#destinations">Lihat Destinasi</a>
+        </div>
+    </section>
+
+    <section id="services" data-aos="fade-up">
+        <h2>layanan kami</h2>
+        <div class="services-card">
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <h3>Paket Wisata</h3>
+                <p>Temukan paket wisata yang terkurasi untuk liburan yang sempurna</p>
+            </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <h3>Penyewaan Kendaraan</h3>
+            <P>Sewa kendaraan dengan harga bersaing untuk kenyamanan perjalanan anda.</P>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+          <h3>Tour Pribadi</h3>
+          <p>Tour pribadi dengan pemandu berlisensi untuk pengalaman wisata yang lebih intimate.</p>
+        </div>
+    </div>
+    </section>
+
+    <section id="destinations" data-aos="fade-up">
+        <h2>Destinasi Populer Indonesia</h2>
+        <div class="destination-gallery">
+          <div class="destination-item">
+            <img src="pexels-freestockpro-2166643.jpg" alt="Destinasi 1">
+            <h4>Bali</h4>
+          </div>
+          <div class="destination-item">
+            <img src="pexels-gsn-travel-28518047.jpg" alt="Destinasi 2">
+            <h4>Yogyakarta</h4>
+          </div>
+          <div class="destination-item">
+            <img src="pexels-tomfisk-2136357.jpg" alt="Destinasi 3">
+            <h4>Jakarta</h4>
+          </div>
+        </div>
+        <a class="cta-btn" href="#blog">Lihat Blog Wisata</a>
+      </section>
+
+      <section id="blog" data-aos="fade-up">
+        <h2> Wisata Indonesia </h2>
+        <div class="blog-posts">
+          <div class="post">
+            <img src="pexels-aronvisuals-1646870.jpg" alt="Post 1">
+            <h4>Petualangan di Bali</h4>
+            <p>Temukan keindahan alam Bali dan tempat wisata tersembunyi yang tak boleh Anda lewatkan.</p>
+            <a class="cta-btn" href="#">Baca Selengkapnya</a>
+          </div>
+          <div class="post">
+            <img src="wisata yogya.jpg" alt="Post 2">
+            <h4>Wisata Kuliner di Yogyakarta</h4>
+            <p>Jelajahi ragam kuliner khas Yogyakarta yang menggoda selera.</p>
+            <a class="cta-btn" href="#">Baca Selengkapnya</a>
+          </div>
+          <div class="post">
+            <img src="pexels-dodyk-k-420887746-16836350 (1).jpg" alt="Post 3">
+            <h4>Keindahan Alam Jawa Timur</h4>
+            <p>Wisata alam terbaik di Jawa Timur yang memukau mata dan menenangkan jiwa.</p>
+            <a class="cta-btn" href="#">Baca Selengkapnya</a>
+          </div>
+          <div class="post">
+            <img src="keindahan alam jawa barat 2.jpg" alt="Post 3">
+            <h4>Keindahan Alam Jawa Barat</h4>
+            <p>Wisata alam terbaik di Jawa Barat yang memukau mata dan menenangkan Hati.</p>
+            <a class="cta-btn" href="#">Baca Selengkapnya</a>
+          </div>
+        </div>
+      </section>
+
+    <footer>
+        <p>#</p>
+    </footer>
+
+  
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        AOS.init({
+            duration:1000,
+            once: false,
+            easing:'ease-in-out',
+        });
+
+        window.onscroll = function() {
+            var header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(16, 35, 58, 0.9)';
+            } else {
+                header.style.backgroundColor = 'rgba(16, 35, 58, 0.3)';
+            }
+        };
+
+    </script>
+</body>
+</html>

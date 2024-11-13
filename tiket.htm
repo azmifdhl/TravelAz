@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Tiket Pesawat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+        <header>
+            <h2>TravelA</h2>
+            <h1>Pesan Tiket Pesawat</h1>
+            <p>Pesan tiket pesawat dengan mudah hanya dalam beberapa langkah!</p>
+        </header>
+
+    <section id="search">
+        <h2>Cari Penerbangan</h2>
+        <form id="search-form">
+            <input type="text" id="departure" placeholder="Keberangkatan" required>
+            <input type="text" id="destination" placeholder="Tujuan" required>
+            <input type="date" id="date" required>
+            <button type="submit">Cari Penerbangan</button>
+        </form>
+    </section>
+
+    <section id="flights">
+        <h2>Penerbangan Tersedia</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Maskapai</th>
+                    <th>Keberangkatan</th>
+                    <th>Tujuan</th>
+                    <th>Harga</th>
+                    <th>Pilih</th>
+                </tr>
+            </thead>
+            <tbody id="flight-list">
+            </tbody>
+        </table>
+    </section>
+
+    <section id="booking-form" class="hidden">
+        <h2>Formulir Pemesanan</h2>
+        <form id="ticket-form">
+            <label for="name">Nama:</label>
+            <input type="text" id="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            
+            <label for="passengers">Jumlah Penumpang:</label>
+            <input type="number" id="passengers" required min="1">
+            
+            <label for="flight-date">Pilih Tanggal Keberangkatan:</label>
+            <select id="flight-date" required>
+            </select>
+
+            <button type="submit">Pesan Tiket</button>
+        </form>
+    </section>
+
+    <section id="confirmation" class="hidden">
+        <h2>Konfirmasi Pemesanan</h2>
+        <div class="ticket">
+            <h3>Ticket #<span id="ticket-id"></span></h3>
+            <p><strong>Maskapai:</strong> <span id="confirm-airline"></span></p>
+            <p><strong>Keberangkatan:</strong> <span id="confirm-departure"></span></p>
+            <p><strong>Tujuan:</strong> <span id="confirm-destination"></span></p>
+            <p><strong>Tanggal Keberangkatan:</strong> <span id="confirm-date"></span></p>
+            <p><strong>Jumlah Penumpang:</strong> <span id="confirm-passengers"></span></p>
+            <p><strong>Harga Tiket:</strong> Rp <span id="confirm-price"></span></p>
+        </div>
+        <svg id="barcode"></svg>
+        <div id="checkout-popup" class="popup">
+            <div class="popup-content">
+              <span class="close" onclick="closePopup()">&times;</span>
+              <h2>Terima Kasih Telah Memesan!</h2>
+              <p>Tiket Anda sedang diproses.</p>
+              <button onclick="closePopup()">Tutup</button>
+            </div>
+          </div>
+        <button id="back-to-home">Kembali ke Halaman Utama</button>
+    </section>
+
+    
+    <footer>
+        <p></p>
+    </footer>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        header {
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(16, 35, 58, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.5s ease-in-out;
+            z-index: 1000;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+        
+        #search {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        #search input {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        #search button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        #search button:hover {
+            background-color: #2980b9;
+        }
+        
+        #flights {
+            margin-bottom: 40px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #219653;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        #booking-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        form input, form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+        
+        .ticket {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .ticket h3 {
+            margin-bottom: 20px;
+            color: #2980b9;
+        }
+    
+       #barcode {
+         width: 100%;           
+         height: 60px;          
+         margin-top: 20px;  
+         display: block;        
+         margin-left: auto;
+         margin-right: auto;
+       }
+
+       #barcode text {
+         font-size: 14px;       
+       }
+
+
+       @keyframes fadeIn {
+         from {
+          opacity: 0;
+          transform: scale(0.5);
+      }
+         to {
+          opacity: 1;
+          transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+.popup {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.popup.hidden {
+    display: none;
+    animation: fadeOut 0.4s ease-out;
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.5s ease-out;
+}
+
+          
+
+    </style>
+
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+    const flights = [
+        { id: 1, airline: 'Garuda Indonesia', departure: 'Jakarta', destination: 'Bali', date: '2024-11-15', price: 1000000 },
+        { id: 2, airline: 'Garuda Indonesia', departure: 'Jakarta', destination: 'Yogyakarta', date: '2024-11-15', price: 750000 },
+        { id: 3, airline: 'Garuda Indonesia', departure: 'Jakarta', destination: 'Surabaya', date: '2024-11-15', price: 770000 },
+        { id: 4, airline: 'Lion Air', departure: 'Jakarta', destination: 'Surabaya', date: '2024-11-15', price: 800000 },
+        { id: 5, airline: 'Lion Air', departure: 'Jakarta', destination: 'Bali', date: '2024-11-15', price: 870000 },
+        { id: 6, airline: 'Lion Air', departure: 'Jakarta', destination: 'Yogyakarta', date: '2024-11-15', price: 870000 },
+        { id: 7, airline: 'Batik Air', departure: 'Jakarta', destination: 'Yogyakarta', date: '2024-11-15', price: 900000 }
+    ];
+
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const departure = document.getElementById('departure').value.toLowerCase();
+        const destination = document.getElementById('destination').value.toLowerCase();
+        const date = document.getElementById('date').value;
+
+        const flightList = document.getElementById('flight-list');
+        flightList.innerHTML = '';
+
+        flights.forEach(flight => {
+            if (flight.departure.toLowerCase() === departure && flight.destination.toLowerCase() === destination && flight.date === date) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${flight.airline}</td>
+                    <td>${flight.departure}</td>
+                    <td>${flight.destination}</td>
+                    <td>Rp ${flight.price}</td>
+                    <td><button onclick="bookFlight(${flight.id}, '${flight.airline}', '${flight.departure}', '${flight.destination}', ${flight.price})">Pesan</button></td>
+                `;
+                flightList.appendChild(tr);
+            }
+        });
+    });
+
+    window.bookFlight = function(flightId, airline, departure, destination, price) {
+        document.getElementById('search').classList.add('hidden');
+        document.getElementById('flights').classList.add('hidden');
+        document.getElementById('booking-form').classList.remove('hidden');
+
+        const flightDateSelect = document.getElementById('flight-date');
+        const option = document.createElement('option');
+        option.textContent = '2024-11-15';
+        option.value = '2024-11-15';
+        flightDateSelect.appendChild(option);
+
+        document.getElementById('ticket-form').onsubmit = function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const passengers = document.getElementById('passengers').value;
+            const ticketId = Math.floor(Math.random() * 1000000);
+
+            document.getElementById('booking-form').classList.add('hidden');
+            document.getElementById('confirmation').classList.remove('hidden');
+
+            document.getElementById('ticket-id').textContent = ticketId;
+            document.getElementById('confirm-airline').textContent = airline;
+            document.getElementById('confirm-departure').textContent = departure;
+            document.getElementById('confirm-destination').textContent = destination;
+            document.getElementById('confirm-date').textContent = '2024-11-15';
+            document.getElementById('confirm-passengers').textContent = passengers;
+            document.getElementById('confirm-price').textContent = price * passengers;
+
+            JsBarcode("#barcode", ticketId.toString(), {
+                format: "CODE128",       
+                displayValue: true,       
+                fontSize: 18,             
+                height: 40,               
+                width: 2,                
+                margin: 10,              
+                background: "#fff",      
+                lineColor: "#000"        
+            });
+
+            showPopup();  
+        };
+    };
+
+    function showPopup() {
+        const popup = document.getElementById("checkout-popup");
+        popup.style.display = "flex"; 
+        setTimeout(() => {
+            popup.classList.remove('hidden');
+        }, 10); 
+    }
+
+    function closePopup() {
+        const popup = document.getElementById("checkout-popup");
+        popup.classList.add('hidden'); 
+        setTimeout(() => {
+            popup.style.display = "none"; 
+        }, 400); 
+    }
+
+    document.getElementById('back-to-home').addEventListener('click', function() {
+        document.getElementById('confirmation').classList.add('hidden');
+        document.getElementById('search').classList.remove('hidden');
+        document.getElementById('flights').classList.remove('hidden');
+    });
+
+    document.getElementById('checkout-popup').querySelector('.close').addEventListener('click', closePopup);
+});
+
+
+        </script>
+
+</body>
+</html>
